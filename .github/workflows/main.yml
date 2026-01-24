@@ -1,4 +1,4 @@
-name: Python CI
+name: Vote Eligibility Checker
 
 on:
   push:
@@ -6,28 +6,41 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      age:
+        description: 'Enter your age'
+        required: true
+        default: 18
 
 jobs:
-  run-script:
+  check-vote:
     runs-on: ubuntu-latest
 
     steps:
-  
+      # Step 1: Check out the repo
       - uses: actions/checkout@v4
 
-    
+      # Step 2: Set up Python
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11  # or whichever version you use
+          python-version: 3.11
 
-
+      # Step 3: Install dependencies (if any)
       - name: Install dependencies
         run: |
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
 
-  
-      - name: Run vote-eligibility-check
+      # Step 4: Run the vote eligibility check
+      - name: Check vote eligibility
         run: |
-          python vote_eligibility_check.py
+          AGE=${{ github.event.inputs.age }}
+          python - <<EOF
+age = int("$AGE")
+if age >= 18:
+    print(f"Age {age}: You are eligible to vote!")
+else:
+    print(f"Age {age}: You are NOT eligible to vote.")
+EOF
+
