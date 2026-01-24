@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repo
+      # Step 1: Checkout the repo
       - uses: actions/checkout@v4
 
       # Step 2: Set up Python
@@ -25,22 +25,13 @@ jobs:
         with:
           python-version: 3.11
 
-      # Step 3: Install dependencies (if any)
+      # Step 3: Install dependencies if any
       - name: Install dependencies
         run: |
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
 
-      # Step 4: Run the vote eligibility check
+      # Step 4: Run the vote_check.py script with the input age
       - name: Check vote eligibility
-        run: |
-          AGE=${{ github.event.inputs.age }}
-          python - <<EOF
-age = int("$AGE")
-if age >= 18:
-    print(f"Age {age}: You are eligible to vote!")
-else:
-    print(f"Age {age}: You are NOT eligible to vote.")
-EOF
-
+        run: python vote_check.py ${{ github.event.inputs.age }}
