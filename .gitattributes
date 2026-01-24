@@ -1,1 +1,2 @@
-* text=auto
+# Disable automatic line ending normalization for all files
+* -text
