@@ -1,40 +1,34 @@
-name: Vote Eligibility Checker
+name: Vote Eligibility CI
 
 on:
-  push:          # Automatically runs on any branch push
-    branches: ["*"]
-  pull_request:  # Automatically runs on any PR
-    branches: ["*"]
-  workflow_dispatch:   # Still allows manual runs
-    inputs:
-      age:
-        description: 'Enter your age'
-        required: true
-        default: 18
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
 
 jobs:
-  check-vote:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      # Step 2: Set up Python
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      # Step 3: Install dependencies if any
-      - name: Install dependencies
-        run: |
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
+    - name: Install Dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm install
+        else
+          echo "No package.json found, skipping install."
+        fi
 
-      # Step 4: Run vote_check.py
-      - name: Check vote eligibility
-        run: |
-          # Use input age if provided; otherwise default to 18
-          AGE=${{ github.event.inputs.age || 18 }}
-          python vote_check.py $AGE
+    - name: Lint Check
+      run: |
+        echo "Running basic syntax check..."
+        # This checks if your JS files have basic syntax errors
+        find . -name "*.js" -exec node -c {} +
