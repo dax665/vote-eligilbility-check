@@ -1,11 +1,12 @@
+
 name: Vote Eligibility Checker
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+  push:          # Automatically runs on any branch push
+    branches: ["*"]
+  pull_request:  # Automatically runs on any PR
+    branches: ["*"]
+  workflow_dispatch:   # Still allows manual runs
     inputs:
       age:
         description: 'Enter your age'
@@ -17,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repo
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v4
 
       # Step 2: Set up Python
@@ -32,6 +33,9 @@ jobs:
             pip install -r requirements.txt
           fi
 
-      # Step 4: Run the vote_check.py script with the input age
+      # Step 4: Run vote_check.py
       - name: Check vote eligibility
-        run: python vote_check.py ${{ github.event.inputs.age }}
+        run: |
+          # If manually triggered, use the input age; otherwise default to 18
+          AGE=${{ github.event.inputs.age || 18 }}
+          python vote_check.py $AGE
