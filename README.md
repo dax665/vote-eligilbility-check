@@ -1,24 +1,19 @@
-# 🗳️ Vote Eligibility Checker
-![Build Status](https://github.com/dax665/vote-eligilbility-check/actions/workflows/deploy.yml/badge.svg)
+# 🗳️ Voting Age Checker
 
-A simple, lightweight web application that determines if a user is eligible to vote based on their age.
+A simple website to check if you are old enough to vote.
 
-## 🚀 Live Demo
-Check out the live application here: 
-**[View Live Site](https://dax665.github.io/vote-eligilbility-check/)**
+## 🔗 Live Link
+[Click here to see the site!](https://dax665.github.io/vote-eligilbility-check/)
 
-## ✨ Features
-* **Real-time Validation:** Instant feedback on eligibility.
-* **Responsive Design:** Works on both desktop and mobile browsers.
-* **Automated CI/CD:** Powered by GitHub Actions for automated testing and deployment.
+## 📝 How to use
+1. Enter your age in the box.
+2. Click the **Check Status** button.
+3. The app will tell you if you are eligible or not.
 
-## 🛠️ Technology Stack
-* **HTML5:** Semantic structure.
-* **CSS3:** Custom styling for a clean user interface.
-* **JavaScript:** Logic handling and DOM manipulation.
-* **GitHub Actions:** Automated deployment pipeline.
+## 🛠️ Built With
+* **HTML** - The structure of the page.
+* **Python** - The logic that checks the age.
+* **GitHub Actions** - Automatically puts the site online.
 
-## ⚙️ Development
-To run this project locally:
-1. Clone the repo: `git clone https://github.com/dax665/vote-eligilbility-check.git`
-2. Open `index.html` in your browser.
+---
+*Made by dax665*
